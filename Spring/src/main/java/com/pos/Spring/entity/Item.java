@@ -1,5 +1,7 @@
 package com.pos.Spring.entity;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -10,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
@@ -38,5 +41,9 @@ public class Item {
     @ManyToOne
     @JoinColumn(name="itemCategory_id")
     private ItemCategory itemCategory;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "items")
+    private List<Transaction> transactions;
     
 }
