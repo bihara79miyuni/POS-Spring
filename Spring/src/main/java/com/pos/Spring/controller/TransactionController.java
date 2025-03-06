@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pos.Spring.Service.ItemService;
 import com.pos.Spring.Service.StockService;
 import com.pos.Spring.Service.TransactionService;
+import com.pos.Spring.Service.UserService;
 import com.pos.Spring.dto.TransactionReqDto;
 import com.pos.Spring.entity.Item;
 import com.pos.Spring.entity.Stock;
 import com.pos.Spring.entity.Transaction;
+import com.pos.Spring.entity.User;
 
 @RestController
 @CrossOrigin(origins="*")
@@ -30,6 +32,9 @@ public class TransactionController {
 
     @Autowired
     private StockService stockService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/transactions")
     public ResponseEntity<List<Transaction>> getAllTransactions(){
@@ -56,10 +61,14 @@ public class TransactionController {
                 itemTransactions.add(item);
                 transaction.setTotalAmount(transaction.getTotalAmount()+item.getPrice());
                 stock.setQuantity(stock.getQuantity()-1);
+            }else{
+                System.out.println("id null");            
             }
         });
 
         transaction.setItems(itemTransactions);
+        User user = userService.getUserById(transactionReqDto.getUserId());
+        transaction.setUser(user);
 
         transactionService.createTransaction(transaction);
 

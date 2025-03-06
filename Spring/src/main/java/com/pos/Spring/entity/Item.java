@@ -2,8 +2,6 @@ package com.pos.Spring.entity;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
