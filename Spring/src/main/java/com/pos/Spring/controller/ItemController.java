@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.pos.Spring.entity.Item;
 import com.pos.Spring.entity.ItemCategory;
 
 @RestController
+@CrossOrigin(origins="*")
 public class ItemController {
     @Autowired
     private ItemService itemService;
@@ -35,9 +37,9 @@ public class ItemController {
 
     @PostMapping("/items")
     public ResponseEntity<Item> createItem(@RequestBody ItemReqDto itemReqDto){
-        Item item = new Item();
-        item.setDescription(itemReqDto.getDescription());
+        Item item = new Item(); 
         item.setName(itemReqDto.getName());
+        item.setDescription(itemReqDto.getDescription());
         item.setPrice(itemReqDto.getPrice());
         ItemCategory itemCategory = itemCategoryService.getItemCategoryById(itemReqDto.getItemCategoryId());
         item.setItemCategory(itemCategory);
