@@ -24,7 +24,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
 
         if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7); // remove first 7 characters from token which is Bearer .
+            return authHeader.substring(7); 
         } else {
             return null;
         }
@@ -37,14 +37,14 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         try {
 
-            // check JWT Token in the Request and validate
+           
             String jwtToken = parseJwtFromHeader(request);
 
             if (jwtToken != null && jwtUtils.validateJwtToken(jwtToken)) {
-                // extract username from JWT Token
+              
                 String username = jwtUtils.extractUsernameFromJwt(jwtToken);
 
-                // build authentication object
+               
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username,
                         null, null);
                 authentication.setDetails(new WebAuthenticationDetails(request));

@@ -20,18 +20,18 @@ public class JwtUtils {
     private String secret;
 
     private Key key() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret)); //generating key with the secret
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret)); 
     }
 
     public String generateJwtToken(Authentication authentication) {
 
         UserDetails user = (UserDetails) authentication.getPrincipal();
 
-        //generate JWT Token from user detail above
+       
         return Jwts.builder()
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + 1000 * 60 * 60 * 24)) //expire in 24 hours
+                .setExpiration(new Date(new Date().getTime() + 1000 * 60 * 60 * 24)) 
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
 
